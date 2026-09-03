@@ -18,4 +18,5 @@ s.add(n1)
 print(s)
 print(s)
 print(s)
+print(s)
 
