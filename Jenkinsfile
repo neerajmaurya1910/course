@@ -3,6 +3,12 @@ pipeline {
 
     stages {
 
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t my-project .'
@@ -11,7 +17,8 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-                sh 'echo -e "admin\\nadmin" | docker run --rm -i my-project'
+                sh 'docker rm -f my-container || true'
+                sh 'docker run -d --name my-container my-project'
             }
         }
     }
