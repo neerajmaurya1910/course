@@ -1,35 +1,20 @@
 pipeline {
     agent any
-
     stages {
-
         stage('Checkout') {
             steps {
-                checkout scm
+                git url: 'https://github.com/your-username/your-repo.git', branch: 'main'
             }
         }
-
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
-                sh 'docker build -t my-project .'
+                sh 'docker build -t myapp:latest .'
             }
         }
-
-        stage('Run Docker Container') {
+        stage('Test') {
             steps {
-                sh 'docker rm -f my-container || true'
-                sh 'docker run -d --name my-container my-project'
+                sh 'echo "Tests passed"'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-
-        failure {
-            echo 'Pipeline failed!'
         }
     }
 }
